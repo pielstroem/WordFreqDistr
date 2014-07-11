@@ -5,11 +5,11 @@ date: "11.07.2014"
 output: html_document
 ---
 
-Argamon[^argamon2008] discussed the two possible distributions for word frequencies in literary texts, the normal or **Gaussian**, and the **Laplace** distribution. He described their theoretical implications for the calculation of Burrow's *delta*[^burrows] measure of stylometrical distence in between two texts. This short report is aimed at demonstrating whether word frequencies in German literary texts follow a normal distribution or Laplace[^laplace] distribution.
+Argamon[^argamon2008] discussed the two possible distributions for word frequencies in literary texts, the normal or **Gaussian**, and the **Laplace** distribution. He described their theoretical implications for the calculation of Burrow's *delta*[^burrows] measure of stylometrical distance in between two texts. This short report is aimed at demonstrating whether word frequencies in German literary texts follow a normal distribution or Laplace[^laplace] distribution.
 
 ### Methods ###
 
-The results presented here are based on a dataset that provides the frequencies of the 200 most frequent words in equally sized chunks of literary texts by Fontane and Raabe.
+The results presented here are based on a data set that provides the frequencies of the 200 most frequent words in equally sized chunks of literary texts by Fontane and Raabe.
 
 Calculations and figures presented here are made in _R_[^R]. While functions for generating normal distributions are implemented in the basic _R_ installation, modelling Laplace distributions required the `VGAM` package.
 
@@ -31,7 +31,7 @@ source("functions.R")
 
 ### The most frequent words
 
-Plotting distribution densities for the four most frequent words and comparing them to idealized Gauss- and Laplace distributions demonstrates that the Gauss curve to be a much more convient model than the Laplace curve.
+Plotting distribution densities for the four most frequent words and comparing them to idealized Gauss- and Laplace distributions demonstrates that the Gauss curve to be a much more convenient model than the Laplace curve.
 
 ```{r, echo = FALSE}
 ## set up 2x2 panel
@@ -63,7 +63,7 @@ for(i in 51:54)
 
 ### Even lesser frequent words
 
-These are words 197-200, the least frequent on the list. Zero is the most frequent frequnecy now and we can assume that a Poisson model would be the best option here. However, Laplace still does not look any better than Gauss.
+These are words 197-200, the least frequent on the list. Zero is the most frequent frequency now and we can assume that a Poisson model would be the best option here. However, Laplace still does not look any better than Gauss.
 
 ```{r, echo = FALSE}
 ## set up 2x2 panel
@@ -79,7 +79,7 @@ for(i in 199:202)
 
 ### Conclusion
 
-Based on the dataset used here, there is no evidence for the Lapalace distribution describing word frequencies any better than the normal distribution. Hence, mathematical theory, according to Argamon's work, favors the use of **quadratic** ***delta*** measures based on **euclidian** distance, rather than **linear** ***delta*** measure based on **manhattan** distance.
+Based on the data set used here, there is no evidence for the Lapalace distribution describing word frequencies any better than the normal distribution. Hence, mathematical theory, according to Argamon's work, favors the use of **quadratic** ***delta*** measures based on **euclidian** distance, rather than **linear** ***delta*** measure based on **manhattan** distance.
 
 [^argamon2008]: Argamon, S. (2008). Interpreting Burrow's delta: geometric and probabilistic foundations. _Literary and Linguistic Computing_, 23(2): 131-147.
 
