@@ -1,0 +1,94 @@
+---
+title: "Word frequency distributions in German literary texts"
+author: "Steffen Pielström"
+date: "11.07.2014"
+output: html_document
+---
+
+Argamon[^argamon2008] discussed the two possible distributions for word frequencies in literary texts, the normal or **Gaussian**, and the **Laplace** distribution. He described their theoretical implications for the calculation of Burrow's *delta*[^burrows] measure of stylometrical distence in between two texts. This short report is aimed at demonstrating whether word frequencies in German literary texts follow a normal distribution or Laplace[^laplace] distribution.
+
+### Methods ###
+
+The results presented here are based on a dataset that provides the frequencies of the 200 most frequent words in equally sized chunks of literary texts by Fontane and Raabe.
+
+Calculations and figures presented here are made in _R_[^R]. While functions for generating normal distributions are implemented in the basic _R_ installation, modelling Laplace distributions required the `VGAM` package.
+
+The entire code for this report can be accessed at:
+
+<https://github.com/pielstroem/WordFreqDistr>
+
+```{r, echo = FALSE, message=FALSE}
+## load dataset
+data = read.table("chunck_freqs.csv", header = T)
+
+## load VGMA package (and install previously, if necessary)
+#install.packages("VGAM")
+library(VGAM)
+
+## load cumstom functions from external script file
+source("functions.R")
+```
+
+### The most frequent words
+
+Plotting distribution densities for the four most frequent words and comparing them to idealized Gauss- and Laplace distributions demonstrates that the Gauss curve to be a much more convient model than the Laplace curve.
+
+```{r, echo = FALSE}
+## set up 2x2 panel
+par(mfrow = c(2,2))
+
+## print figures the 4 most frequent word in the set, that has 2 preceding rows of metadata
+for(i in 3:6)
+  {
+  GLDensityPlot(data[,i], names(data)[i])
+  }
+
+```
+
+### Less frequent words
+
+Now some less frequent words: number 51-54 from the list. Here, empirical distributions are clearly skewed towards zero. The Gaussian models are still closer to reality in most cases.
+
+```{r, echo = FALSE}
+## set up 2x2 panel
+par(mfrow = c(2,2))
+
+## print figures the 4 least frequent word in the set, that has 2 preceding rows of metadata
+for(i in 51:54)
+  {
+  GLDensityPlot(data[,i], names(data)[i])
+  }
+
+```
+
+### Even lesser frequent words
+
+These are words 197-200, the least frequent on the list. Zero is the most frequent frequnecy now and we can assume that a Poisson model would be the best option here. However, Laplace still does not look any better than Gauss.
+
+```{r, echo = FALSE}
+## set up 2x2 panel
+par(mfrow = c(2,2))
+
+## print figures the 4 least frequent word in the set, that has 2 preceding rows of metadata
+for(i in 199:202)
+  {
+  GLDensityPlot(data[,i], names(data)[i])
+  }
+
+```
+
+### Conclusion
+
+Based on the dataset used here, there is no evidence for the Lapalace distribution describing word frequencies any better than the normal distribution. Hence, mathematical theory, according to Argamon's work, favors the use of **quadratic** ***delta*** measures based on **euclidian** distance, rather than **linear** ***delta*** measure based on **manhattan** distance.
+
+[^argamon2008]: Argamon, S. (2008). Interpreting Burrow's delta: geometric and probabilistic foundations. _Literary and Linguistic Computing_, 23(2): 131-147.
+
+[^burrows]: Burrows, J. (2002). ‘Delta’: A measure of stylistic difference and a guide to likely authorship. _Literary and Linguistic Computing_, 17(3): 267-287.
+
+[^laplace]: See <http://pj.freefaculty.org/guides/stat/Distributions/DistributionWriteups/Laplace/Laplace-03.pdf>
+
+[^R]: See <http://www.r-project.org>
+
+
+
+
